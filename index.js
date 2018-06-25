@@ -64,9 +64,9 @@ app.get('/getOrgMonthPageCount', function (req, res) {
   })
 })
 // only first time use
-// app.get('/db/createTable', function (req, res) {
-//   new Database().createTable((msg) => { res.send(msg) })
-// })
+app.get('/db/createTable', function (req, res) {
+  new Database().createTable((msg) => { res.send(msg) })
+})
 // app.get('/db/dropTable', function(req, res){
 //   new Database().dropTable((msg) => { res.send(msg) });
 // });
