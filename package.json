@@ -8,17 +8,19 @@
   },
   "dependencies": {
     "asposestoragecloud": "^1.0.5",
-    "asposewordscloud": "^18.5.0",
-    "async": "^1.5.0",
-    "body-parser": "^1.14.1",
-    "express": "4.13.3",
-    "hummus": "^1.0.87",
-    "json2csv": "^4.1.3",
-    "memory-streams": "^0.1.3",
-    "pg": "^7.4.3"
+    "asposewordscloud": "^19.2.0",
+    "async": "^3.1.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "hummus": "^1.0.105",
+    "json2csv": "^4.5.2",
+    "pg": "^7.12.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0"
   },
   "engines": {
-    "node": "8.1.4"
+    "node": "12.9.0"
   },
   "repository": {
     "type": "git",
@@ -28,9 +30,5 @@
     "node",
     "heroku",
     "express"
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "eslint": "^4.19.1"
-  }
+  ]
 }
