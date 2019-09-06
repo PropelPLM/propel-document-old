@@ -24,7 +24,7 @@ const data = {
                 "footerCenterText": "FFFFFFFFF",
                 "watermarkText": "Released"
             },
-            "pdfDocumentId": "0693s000007CZWWAA4",
+            "pdfDocumentId": null,
             "itemRevisionId": "a0L3s000008sAWREA2",
             "itemId": "a0N3s00000MWHk1EAH"
         },
@@ -40,7 +40,7 @@ const data = {
                 "footerCenterText": "FFFFFFFFF",
                 "watermarkText": "Released"
             },
-            "pdfDocumentId": "0693s000007CZWbAAO",
+            "pdfDocumentId": null,
             "itemRevisionId": "a0L3s000008sAWREA2",
             "itemId": "a0N3s00000MWHk1EAH"
         }

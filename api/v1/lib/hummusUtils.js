@@ -16,7 +16,6 @@ const main = (rules, pdfTempName) => {
     const smallestPageWidth = pageWidth * 0.6 // hard coded 60% of page width
     let l = 0, r = 96, fontSize; // max font size set to 96
     let textDimensions, widthRotated, widthAdjust, widthTotal;
-
     while (l <= r) {
       if (Math.abs((l + r) / 2 - fontSize) < 1) {
         break;

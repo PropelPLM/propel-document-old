@@ -20,7 +20,9 @@ const storageApi = global.storageApiMap[uId] || new StorageApi(config)
 global.storageApiMap[uId] = storageApi
 
 const downloadFile = async (name, folder, format, outPath) => {
+
   const token = await getToken()
+
   const options = {
     hostname: asposeHostname,
     path: `/v4.0/words/${encodeURIComponent(name)}?folder=${folder}&format=${format}`,
@@ -30,6 +32,7 @@ const downloadFile = async (name, folder, format, outPath) => {
     },
   }
   const file = fs.createWriteStream(outPath)
+
   await new Promise((resolve, reject) => {
     const req = new https.request(options, (res) => {
       if (res.statusCode != 200) {
