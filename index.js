@@ -11,7 +11,7 @@ app.listen((process.env.PORT || 8080))
 app.get('/', (req, res) => res.send('live'))
 
 app.use('/', require('./api/v0'))
-app.use('/', require('./api/v1'))
+app.use('/v1', require('./api/v1'))
 
 //TODO: to create new version, duplicate latest api version folder and use the following line to create the route
 // app.use('/v1', require('./api/v1'))
