@@ -36,7 +36,7 @@ const downloadFile = async (name, folder, format, outPath) => {
   await new Promise((resolve, reject) => {
     const req = new https.request(options, (res) => {
       if (res.statusCode != 200) {
-        throw new Error('Fail to get file')
+        throw new Error('Fail to get file: ' + res.statusCode + res.statusMessage)
       }
       res.pipe(file)
       res.on('end', () => {

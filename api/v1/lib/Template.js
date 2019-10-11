@@ -18,6 +18,15 @@ class Template {
     this.dataToPopulate = dataToPopulate
     this.templateNameOnAspose = templateNameOnAspose
 
+    console.log(res);
+    console.log(sessionId);
+    console.log(orgId);
+    console.log(recordId);
+    console.log(newFileName);
+    console.log(dataToPopulate);
+    console.log(templateNameOnAspose);
+
+
     const hostUrlArray = hostUrl.split('//')
     const hostname = hostUrlArray[hostUrlArray.length - 1]
     this.hostname = hostname
