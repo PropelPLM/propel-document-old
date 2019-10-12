@@ -33,12 +33,12 @@ const downloadFile = async (name, folder, format, outPath) => {
   await new Promise((resolve, reject) => {
     const req = new https.request(options, (res) => {
       if (res.statusCode != 200) {
-        throw new Error('Fail to get file')
+        reject(`Fail to get file (1): ${res.statusCode}:${res.statusMessage}`)
       }
       res.pipe(file)
       res.on('end', () => {
         file.end()
-        setTimeout(resolve, 0)
+        setTimeout(resolve, 100)
       })
     })
     req.on('error', (e) => {
@@ -109,7 +109,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
       })
       getRes.on('end', () => {
         putReq.end(() => {
-          resolve()
+          setTimeout(resolve, 300)
         })
       })
     })

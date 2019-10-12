@@ -65,7 +65,7 @@ const main = (rules, pdfTempName) => {
     }
     pdfWriter.end();
   } catch (e) {
-    console.error(e.stack)
+    throw new Error(e.stack)
   }
 
 }

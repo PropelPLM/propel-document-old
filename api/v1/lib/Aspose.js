@@ -36,12 +36,12 @@ const downloadFile = async (name, folder, format, outPath) => {
   await new Promise((resolve, reject) => {
     const req = new https.request(options, (res) => {
       if (res.statusCode != 200) {
-        throw new Error('Fail to get file: ' + res.statusCode + res.statusMessage)
+        reject(`Fail to get file (1): ${res.statusCode}:${res.statusMessage}`)
       }
       res.pipe(file)
       res.on('end', () => {
         file.end()
-        setTimeout(resolve, 0)
+        setTimeout(resolve, 100)
       })
     })
     req.on('error', (e) => {
@@ -65,7 +65,7 @@ const newFileFromTemplate = async (templateName, folder, newName, data) => {
   try {
     const res = await wordsApi.postExecuteTemplate(request)
     if (!res || res.response.statusCode != 200) {
-      throw new Error(`Fail to post file: ${res.response.statusCode}:${res.response.statusMessage}`)
+      throw new Error(`Fail to post file (2): ${res.response.statusCode}:${res.response.statusMessage}`)
     }
 
   } catch (e) {
@@ -94,7 +94,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
 
     const putReq = https.request(putOptions, (putRes) => {
       if (putRes.statusCode != 200) {
-        reject(`Fail to post file: ${putRes.statusCode}:${putRes.statusMessage}`)
+        reject(`Fail to post file (3): ${putRes.statusCode}: ${putRes.statusMessage}`)
       }
     })
 
@@ -104,7 +104,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
 
     const getReq = https.request(getOptions, (getRes) => {
       if (getRes.statusCode != 200) {
-        reject(`Fail to get file: ${getRes.statusCode}:${getRes.statusMessage}`)
+        reject(`Fail to get file (2): ${getRes.statusCode}:${getRes.statusMessage}`)
       }
 
       getRes.on('data', (chunk) => {
@@ -112,7 +112,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
       })
       getRes.on('end', () => {
         putReq.end(() => {
-          resolve()
+          setTimeout(resolve, 300)
         })
       })
     })
