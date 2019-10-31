@@ -11,12 +11,13 @@ const approvalTemplateName = 'Approval_Template.doc'
 
 class Watermark {
   constructor(body, res) {
-    const { documents, approvalData, hostUrl, sessionId, orgId } = body
+    const { documents, approvalData, hostUrl, sessionId, orgId, namespace } = body
     let hostUrlArray = hostUrl.split('//')
     this.hostname = hostUrlArray[hostUrlArray.length - 1]
     this.documents = documents
     this.approvalData = approvalData
     this.orgId = orgId
+    this.namespace = namespace
     this.sessionId = sessionId
 
     this.versionIds = {}
