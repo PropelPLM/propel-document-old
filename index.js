@@ -12,9 +12,7 @@ app.get('/', (req, res) => res.send('live'))
 
 app.use('/', require('./api/v0'))
 app.use('/v1', require('./api/v1'))
-
-//TODO: to create new version, duplicate latest api version folder and use the following line to create the route
-// app.use('/v1', require('./api/v1'))
+app.use('/v2', require('./api/v2'))
 
 // only first time use
 // app.get('/db/createTable', function (req, res) {
