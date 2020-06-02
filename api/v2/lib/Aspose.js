@@ -84,7 +84,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
 
     let putOptions = {
       hostname: asposeHostname,
-      path: sign('/v1.1/storage/file?path=' + encodeURIComponent(hexDOCName)),
+      path: sign('/v1.1/storage/file?path=/Converting/' + encodeURIComponent(hexDOCName)),
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
