@@ -36,7 +36,7 @@ const downloadFile = async (name, folder, format, outPath) => {
   await new Promise((resolve, reject) => {
     const req = new https.request(options, (res) => {
       if (res.statusCode != 200) {
-        reject(`Fail to get file (1): ${res.statusCode}:${res.statusMessage}`)
+        reject(`Fail to get file (1): ${res.statusCode}:${res.statusMessage} : ${name}`)
       }
       res.pipe(file)
       res.on('end', () => {
@@ -65,7 +65,7 @@ const newFileFromTemplate = async (templateName, folder, newName, data) => {
   try {
     const res = await wordsApi.postExecuteTemplate(request)
     if (!res || res.response.statusCode != 200) {
-      throw new Error(`Fail to post file (2): ${res.response.statusCode}:${res.response.statusMessage}`)
+      throw new Error(`Fail to post file (2): ${res.response.statusCode}:${res.response.statusMessage} : ${templateName}`)
     }
 
   } catch (e) {
@@ -94,7 +94,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
 
     const putReq = https.request(putOptions, (putRes) => {
       if (putRes.statusCode != 200) {
-        reject(`Fail to post file (3): ${putRes.statusCode}: ${putRes.statusMessage}`)
+        reject(`Fail to post file (3): ${putRes.statusCode}: ${putRes.statusMessage} : ${hexDOCName}`)
       }
     })
 
@@ -104,7 +104,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
 
     const getReq = https.request(getOptions, (getRes) => {
       if (getRes.statusCode != 200) {
-        reject(`Fail to get file (2): ${getRes.statusCode}:${getRes.statusMessage}`)
+        reject(`Fail to get file (2): ${getRes.statusCode}:${getRes.statusMessage} : ${hexDOCName}`)
       }
 
       getRes.on('data', (chunk) => {
