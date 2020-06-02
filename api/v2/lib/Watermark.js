@@ -65,7 +65,7 @@ class Watermark {
       await Aspose.moveFileToAspose(this.hostname, this.sessionId, hexDOCName, templateVersionId)
 
       // download file as pdf (convert on aspose)
-      await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName)
+      await Aspose.downloadFile(hexDOCName, 'Converting', 'pdf', hexPDFName)
 
       // add watermark
       hummusUtils.main(stamps, hexPDFName)
