@@ -20,9 +20,7 @@ class Watermark {
     this.namespace = namespace
     this.sessionId = sessionId
 
-    console.log('>>> documents', documents);
-    console.log('>>> approvalData', approvalData);
-
+    // console.log('>>> body', body);
 
     this.versionIds = {}
     this.changeTemplateMap = {}
@@ -61,11 +59,13 @@ class Watermark {
       const hexDOCName = hex + '.doc'
       const hexPDFName = hex + '.pdf'
 
+      console.log('>>> convert ', templateName, hex);
+
       // move doc from sf to aspose
       await Aspose.moveFileToAspose(this.hostname, this.sessionId, hexDOCName, templateVersionId)
 
       // download file as pdf (convert on aspose)
-      await Aspose.downloadFile(hexDOCName, 'Converting', 'pdf', hexPDFName)
+      await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName)
 
       // add watermark
       hummusUtils.main(stamps, hexPDFName)
