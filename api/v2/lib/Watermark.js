@@ -20,7 +20,7 @@ class Watermark {
     this.namespace = namespace
     this.sessionId = sessionId
 
-    // console.log('>>> body', body);
+    console.log('>>> body', body);
 
     this.versionIds = {}
     this.changeTemplateMap = {}
@@ -59,7 +59,7 @@ class Watermark {
       const hexDOCName = hex + '.doc'
       const hexPDFName = hex + '.pdf'
 
-      console.log('>>> convert ', templateName, hex);
+      console.log('>>> convert : ', templateName, hex);
 
       // move doc from sf to aspose
       await Aspose.moveFileToAspose(this.hostname, this.sessionId, hexDOCName, templateVersionId)
@@ -147,7 +147,7 @@ class Watermark {
       }
       const req = new https.request(options, (res) => {
         if (res.statusCode != 200) {
-          reject(`Fail to post file links: ${res.statusCode}:${res.statusMessage}`)
+          reject(`Fail to post file links: ${res.statusCode}: ${res.statusMessage}`)
         }
         res.on('end', () => {
           resolve()
