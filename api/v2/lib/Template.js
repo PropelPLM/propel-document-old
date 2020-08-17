@@ -10,6 +10,8 @@ class Template {
   constructor(body, res) {
     const { hostUrl, sessionId, orgId, recordId, templateNameOnAspose, newFileName, dataToPopulate } = body
 
+    console.log('>>> body', body);
+
     this.res = res
     this.sessionId = sessionId
     this.orgId = orgId
@@ -113,7 +115,7 @@ class Template {
       })
       // If error show message and finish response
       req.on('error', (e) => {
-        reject(e.message)
+        reject(e)
       })
 
       // write data to request body
@@ -122,6 +124,8 @@ class Template {
       fs.createReadStream(tempFilePDFName).on('end', () => {
         req.end(CRLF + '--' + boundary + '--' + CRLF);
       }).pipe(req, { end: false });
+    }).then(() => {}, (e) => {
+      console.error(e)
     })
   }
 }
