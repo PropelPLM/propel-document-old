@@ -20,12 +20,11 @@ const storageApi = global.storageApiMap[uId] || new StorageApi(config)
 global.storageApiMap[uId] = storageApi
 
 const downloadFile = async (name, folder, format, outPath) => {
-
   const token = await getToken()
-
+  const type = (name.endsWith('.docx') || name.endsWith('.doc')) ? 'v4.0/words' : 'v3.0/cells'
   const options = {
     hostname: asposeHostname,
-    path: `/v4.0/words/${encodeURIComponent(name)}?folder=${folder}&format=${format}`,
+    path: `/${type}/${encodeURIComponent(name)}?folder=${folder}&format=${format}`,
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,

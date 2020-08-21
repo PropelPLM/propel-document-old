@@ -50,13 +50,14 @@ class Watermark {
       const { templateName, templateExtension, templateVersionId, itemId, pdfDocumentId, itemRevisionId, stamps, changeId } = doc
       let fileName = templateName
       let fileNameNoExt = templateName
+      let ext = '.docx'
       if (templateExtension) {
-        const ext = '.' + templateExtension
+        ext = '.' + templateExtension
         fileNameNoExt = fileName.replace(new RegExp(ext + '$', 'i'), '')
         fileName = fileNameNoExt + ext
       }
       const hex = crypto.randomBytes(20).toString('hex')
-      const hexDOCName = hex + '.doc'
+      const hexDOCName = hex + ext
       const hexPDFName = hex + '.pdf'
 
       console.log('>>> convert : ', templateName, hex);
