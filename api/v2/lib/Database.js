@@ -28,6 +28,22 @@ const getOrgTable = async (orgId, month, year) => {
     console.error(e.stack)
   }
 }
+
+const clearTable = async(cb) => {
+  const client = new Client(dbClientConfig)
+  client.connect()
+  const month = (new Date).getMonth() + 1
+  const year = (new Date).getFullYear()
+  let extractMonth = 'EXTRACT(MONTH FROM datetime) < ' + month + ' and '
+  let extractYear = ' EXTRACT(YEAR FROM datetime) <= ' + year + ' and '
+  try {
+    const { rows } = await client.query('DELETE FROM user_execute_log WHERE ' + extractMonth + extractYear);
+    client.end()
+    return rows
+  } catch (e) {
+    console.error(e.stack)
+  }
+}
 const createTable = async(cb) => {
   const client = new Client(dbClientConfig)
   client.connect()
@@ -61,7 +77,8 @@ module.exports = {
   insertRecord,
   getOrgTable,
   dropTable,
-  createTable
+  createTable,
+  clearTable,
 }
 
 

@@ -43,9 +43,9 @@ app.get('/getOrgMonthPageCount', async (req, res) => {
   res.status(200)
   res.send({ page_count: count })
 })
-app.get('/db/createTable', function (req, res) {
-  Database.createTable((msg) => { res.send(msg) })
-})
-app.get('/db/dropTable', function(req, res){
-  Database.dropTable((msg) => { res.send(msg) });
-});
+// app.get('/db/createTable', function (req, res) {
+//   Database.createTable((msg) => { res.send(msg) })
+// })
+// app.get('/db/dropTable', function(req, res){
+//   Database.dropTable((msg) => { res.send(msg) });
+// });
