@@ -37,11 +37,12 @@ const clearTable = async(cb) => {
   let extractMonth = 'EXTRACT(MONTH FROM datetime) < ' + month + ' and '
   let extractYear = ' EXTRACT(YEAR FROM datetime) <= ' + year + ' and '
   try {
-    const { rows } = await client.query('DELETE FROM user_execute_log WHERE ' + extractMonth + extractYear);
+    await client.query('DELETE FROM user_execute_log WHERE ' + extractMonth + extractYear);
     client.end()
-    return rows
+    cb('Table Cleared')
   } catch (e) {
     console.error(e.stack)
+    cb(e.stack)
   }
 }
 const createTable = async(cb) => {
