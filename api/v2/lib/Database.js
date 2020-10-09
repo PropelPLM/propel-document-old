@@ -32,12 +32,10 @@ const getOrgTable = async (orgId, month, year) => {
 const clearTable = async(cb) => {
   const client = new Client(dbClientConfig)
   client.connect()
-  const month = (new Date).getMonth() + 1
-  const year = (new Date).getFullYear()
-  let extractMonth = 'EXTRACT(MONTH FROM datetime) < ' + month + ' and '
-  let extractYear = ' EXTRACT(YEAR FROM datetime) <= ' + year + ' and '
+  const date = new Date()
+  const firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1);
   try {
-    await client.query('DELETE FROM user_execute_log WHERE ' + extractMonth + extractYear);
+    await client.query('DELETE FROM user_execute_log WHERE datetime <' + firstDay.toISOString());
     client.end()
     cb('Table Cleared')
   } catch (e) {
