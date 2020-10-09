@@ -35,7 +35,7 @@ const clearTable = async(cb) => {
   const date = new Date()
   const firstDay = new Date(date.getFullYear(), date.getMonth() - 1, 1);
   try {
-    await client.query('DELETE FROM user_execute_log WHERE datetime <' + firstDay.toISOString());
+    await client.query(`DELETE FROM user_execute_log WHERE datetime < '${firstDay.toISOString()}'`);
     client.end()
     cb('Table Cleared')
   } catch (e) {
