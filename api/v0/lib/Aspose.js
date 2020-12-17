@@ -2,7 +2,7 @@ const fs = require('fs')
 const https = require('https')
 const crypto = require('crypto')
 const StorageApi = require('asposestoragecloud')
-const { WordsApi, PostExecuteTemplateRequest } = require('asposewordscloud')
+const { WordsApi, ExecuteMailMergeRequest } = require('asposewordscloud')
 
 const asposeHostname = 'api.aspose.cloud'
 const asposeID = 'c73173ea-18d8-4e40-8b40-21596152017a'
@@ -50,13 +50,13 @@ const downloadFile = async (name, folder, format, outPath) => {
 
 const newFileFromTemplate = async (templateName, folder, newName, data) => {
 
-  const request = new PostExecuteTemplateRequest({
+  const request = new ExecuteMailMergeRequest({
     folder: folder,
     name: templateName,
     data: data,
     withRegions: true,
     cleanup: 'EmptyParagraphs,UnusedRegions,UnusedFields,RemoveTitleRow,RemoveTitleRowInInnerTables',
-    destFileName: newName
+    destFileName: `${folder}/${newName}`
   })
 
   try {

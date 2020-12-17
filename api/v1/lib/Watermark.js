@@ -19,8 +19,8 @@ class Watermark {
     this.sessionId = sessionId
     this.res = res
 
-    console.log('>>> documents', documents);
-    console.log('>>> approvalData', approvalData);
+    // console.log('>>> documents', documents);
+    // console.log('>>> approvalData', approvalData);
 
     this.versionIds = {}
     this.changeTemplateMap = {}

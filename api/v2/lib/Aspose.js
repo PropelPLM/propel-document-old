@@ -2,7 +2,7 @@ const fs = require('fs')
 const https = require('https')
 const crypto = require('crypto')
 const StorageApi = require('asposestoragecloud')
-const { WordsApi, PostExecuteTemplateRequest } = require('asposewordscloud')
+const { WordsApi, ExecuteMailMergeRequest } = require('asposewordscloud')
 
 const asposeHostname = 'api.aspose.cloud'
 const asposeID = 'c73173ea-18d8-4e40-8b40-21596152017a'
@@ -34,7 +34,7 @@ const downloadFile = async (name, folder, format, outPath) => {
 
   await new Promise((resolve, reject) => {
     const req = new https.request(options, (res) => {
-      if (res.statusCode != 200) {
+      if (!res || res.statusCode != 200) {
         reject(`Fail to get file (1): ${res.statusCode}:${res.statusMessage} : ${name}`)
       }
       res.pipe(file)
@@ -52,23 +52,23 @@ const downloadFile = async (name, folder, format, outPath) => {
 
 const newFileFromTemplate = async (templateName, folder, newName, data) => {
 
-  const request = new PostExecuteTemplateRequest({
+  const request = new ExecuteMailMergeRequest({
     folder: folder,
     name: templateName,
     data: data,
     withRegions: true,
     cleanup: 'EmptyParagraphs,UnusedRegions,UnusedFields,RemoveTitleRow,RemoveTitleRowInInnerTables',
-    destFileName: newName
+    destFileName: `${folder}/${newName}`
   })
 
   try {
-    const res = await wordsApi.postExecuteTemplate(request)
+    const res = await wordsApi.executeMailMerge(request)
     if (!res || res.response.statusCode != 200) {
       throw new Error(`Fail to post file (2): ${res.response.statusCode}:${res.response.statusMessage} : ${templateName}`)
     }
 
   } catch (e) {
-    console.error(e)
+    console.error(e.body ? e.body.error : e)
   }
 }
 

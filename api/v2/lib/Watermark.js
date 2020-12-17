@@ -20,7 +20,7 @@ class Watermark {
     this.namespace = namespace
     this.sessionId = sessionId
 
-    console.log('>>> body', body);
+    // console.log('>>> body', body);
 
     this.versionIds = {}
     this.changeTemplateMap = {}
@@ -60,7 +60,7 @@ class Watermark {
       const hexDOCName = hex + ext
       const hexPDFName = hex + '.pdf'
 
-      console.log('>>> convert : ', templateName, hex);
+      // console.log('>>> convert : ', templateName, hex);
 
       // move doc from sf to aspose
       await Aspose.moveFileToAspose(this.hostname, this.sessionId, hexDOCName, templateVersionId)
@@ -95,6 +95,7 @@ class Watermark {
       await Aspose.deleteFile('', hexDOCName, null)
     } catch (e) {
       console.error(e)
+      console.error(e.stack)
     }
   }
 

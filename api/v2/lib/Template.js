@@ -10,7 +10,7 @@ class Template {
   constructor(body, res) {
     const { hostUrl, sessionId, orgId, recordId, templateNameOnAspose, newFileName, dataToPopulate } = body
 
-    console.log('>>> body', body);
+    // console.log('>>> body', JSON.stringify(body));
 
     this.res = res
     this.sessionId = sessionId
