@@ -20,8 +20,6 @@ class Watermark {
     this.namespace = namespace
     this.sessionId = sessionId
 
-    // console.log('>>> body', body);
-
     this.versionIds = {}
     this.changeTemplateMap = {}
 
@@ -60,13 +58,18 @@ class Watermark {
       const hexDOCName = hex + ext
       const hexPDFName = hex + '.pdf'
 
-      // console.log('>>> convert : ', templateName, hex);
+      const isDoc = (ext == '.docx' || ext == '.doc')
 
-      // move doc from sf to aspose
-      await Aspose.moveFileToAspose(this.hostname, this.sessionId, hexDOCName, templateVersionId)
+      if (isDoc) {
+        const token = await Aspose.getToken();
+        await Aspose.convertFileOnAspose(token, this.hostname, this.sessionId, hexDOCName, hexPDFName, templateVersionId)
+      } else {
+        // move doc from sf to aspose
+        await Aspose.moveFileToAspose(this.hostname, this.sessionId, hexDOCName, templateVersionId)
 
-      // download file as pdf (convert on aspose)
-      await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName)
+        // download file as pdf (convert on aspose)
+        await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName)
+      }
 
       // add watermark
       hummusUtils.main(stamps, hexPDFName)
@@ -92,10 +95,11 @@ class Watermark {
 
       // clean up
       fs.unlinkSync(hexPDFName)
-      await Aspose.deleteFile('', hexDOCName, null)
+      if (!isDoc) {
+        await Aspose.deleteFile('', hexDOCName, null)
+      }
     } catch (e) {
       console.error(e)
-      console.error(e.stack)
     }
   }
 
@@ -149,7 +153,7 @@ class Watermark {
       }
       const req = new https.request(options, (res) => {
         if (res.statusCode != 200) {
-          reject(`Fail to post file links: ${res.statusCode}: ${res.statusMessage}`)
+          reject(`Fail to post file links: ${res.statusCode}:${res.statusMessage}`)
         }
         res.on('end', () => {
           resolve()

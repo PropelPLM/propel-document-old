@@ -72,6 +72,66 @@ const newFileFromTemplate = async (templateName, folder, newName, data) => {
   }
 }
 
+const convertFileOnAspose = (token, hostname, sessionId, hexDOCName, hexPDFName, templateVersionId) => {
+  return new Promise((resolve, reject) => {
+    const getOptions = {
+      hostname,
+      path: `/services/data/v23.0/sobjects/ContentVersion/${templateVersionId}/VersionData`,
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${sessionId}` }
+    }
+
+    const asposeType = 'v4.0/words' // doc only for now
+    const putOptions = {
+      hostname: asposeHostname,
+      path: `/${asposeType}/convert?format=pdf`,
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/octet-stream',
+        'Authorization': `Bearer ${token}`,
+      },
+    }
+
+    const file = fs.createWriteStream(hexPDFName)
+
+    const putReq = https.request(putOptions, (putRes) => {
+      if (putRes.statusCode != 200) {
+        reject(`Fail to conver file (1): ${putRes.statusCode}: ${putRes.statusMessage} : ${hexDOCName}`)
+      }
+
+      putRes.pipe(file)
+      putRes.on('end', () => {
+        file.end()
+        resolve()
+      })
+    })
+
+    putReq.on('error', (err) => {
+      reject(err)
+    })
+
+    const getReq = https.request(getOptions, (getRes) => {
+      if (getRes.statusCode != 200) {
+        reject(`Fail to convert file (2): ${getRes.statusCode}:${getRes.statusMessage} : ${hexDOCName}`)
+      }
+
+      getRes.on('data', (chunk) => {
+        putReq.write(chunk)
+      })
+      getRes.on('end', () => {
+        putReq.end()
+      })
+    })
+
+    getReq.on('error', (err) => {
+      reject(err)
+    })
+
+    getReq.end()
+  })
+}
+
 const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) => {
   return new Promise((resolve, reject) => {
     let getOptions = {
@@ -177,7 +237,9 @@ const getToken = () => {
 
 module.exports = {
   downloadFile,
+  getToken,
   newFileFromTemplate,
+  convertFileOnAspose,
   moveFileToAspose,
   deleteFile,
   sign
