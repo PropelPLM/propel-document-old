@@ -5,8 +5,8 @@ const StorageApi = require('asposestoragecloud')
 const { WordsApi, ExecuteMailMergeRequest } = require('asposewordscloud')
 
 const asposeHostname = 'api.aspose.cloud'
-const asposeID = 'c73173ea-18d8-4e40-8b40-21596152017a'
-const asposeKey = '8f265cdf54b0c63ceec1c311bb157a4e'
+const asposeID = '4c6d1b09-03c6-470c-a158-f90153b8e2db'
+const asposeKey = '1e7f622a0b8a2db5ac581812d84baa7f'
 const config = { 'appSid': asposeID, 'apiKey': asposeKey }
 
 //these aspose objects need to be singletons, so I cache them on global so they aren't initialized more than once
