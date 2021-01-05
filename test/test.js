@@ -10,7 +10,7 @@ const fakeRes = {
 }
 
 const data = {
-  "sessionId": "00D6A000002kEjK!ARIAQDXz2sOoRe3R4LSO_EY6cWkVt0D0drmgGyeAK9vULFr9sWZC8g5VMDXYqSfuzOm2kMQd3bkHsspubW0FUw1elsulsvap",
+  sessionId: '00D6A000002kEjK!ARIAQJvztEMG2ac5e1S_9WgI7w4FzPSeQ98YJFqYTqLx0iF6YXn2KGTYFzyxysJW9wtXcq6Tv9PTDlVtLBzmqXtBr6N7D47I',
   "orgId": "00D6A000002kEjKUAU",
   "hostUrl": "na122.salesforce.com",
   "namespace": "P5DAN",
@@ -152,7 +152,7 @@ const data = {
 
 const data2 = {
   templateNameOnAspose: 'Quality Template - Product Complaint.docx',
-  sessionId: '00D0U0000009hv5!ARoAQKG3gm.ZRhfk2UdxPMsfsmcmamfTrgCDJBMsd1vYxiNfYUW_45eLjL65o615CL9zh0361IsFL_AElKVUKgxImKQS9kNJ',
+  sessionId: '00D0U0000009hv5!ARoAQHU2WJ0h0nIj2o5gUnoRiBtg_XEQdxyYH0jOv4GSQT2yqAlAtZYSMWe3I3Yv.wrBIZrcVbhJPbfdgbzk2fIQrZrIEchx',
   recordId: 'a1c0U000001SqF4QAK',
   orgId: '00D0U0000009hv5UAA',
   newFileName: 'Quality_CMP-000006538.pdf',
