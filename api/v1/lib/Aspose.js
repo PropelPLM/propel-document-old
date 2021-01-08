@@ -63,7 +63,7 @@ const newFileFromTemplate = async (templateName, folder, newName, data) => {
   })
 
   try {
-    const res = await wordsApi.postExecuteTemplate(request)
+    const res = await wordsApi.executeMailMerge(request)
     if (!res || res.response.statusCode != 200) {
       throw new Error(`Fail to post file (2): ${res.response.statusCode}:${res.response.statusMessage}`)
     }
