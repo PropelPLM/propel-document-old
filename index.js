@@ -8,6 +8,8 @@ app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({extended: false, limit: '50mb'}))
 app.listen((process.env.PORT || 8080))
 
+app.use(express.static(__dirname + '/public'));
+
 app.get('/', (req, res) => res.send('live'))
 
 app.use('/', require('./api/v0'))
