@@ -20,8 +20,6 @@ class Watermark {
     this.namespace = namespace
     this.sessionId = sessionId
 
-    console.log(hostUrl, sessionId, orgId, namespace);
-
     this.versionIds = {}
     this.changeTemplateMap = {}
 

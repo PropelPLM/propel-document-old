@@ -40,7 +40,7 @@ const downloadFile = async (name, folder, format, outPath) => {
       res.pipe(file)
       res.on('end', () => {
         file.end()
-        setTimeout(resolve, 100)
+        setTimeout(resolve, 220)
       })
     })
     req.on('error', (e) => {
@@ -105,11 +105,8 @@ const convertFileOnAspose = (token, hostname, sessionId, hexDOCName, hexPDFName,
       putRes.pipe(file)
       putRes.on('end', () => {
         file.end()
-        setTimeout(resolve, 100)
+        setTimeout(resolve, 220)
       })
-      // putRes.on('finish', () => {
-      //   resolve()
-      // })
     })
 
     putReq.on('error', (err) => {
