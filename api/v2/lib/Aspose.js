@@ -105,10 +105,11 @@ const convertFileOnAspose = (token, hostname, sessionId, hexDOCName, hexPDFName,
       putRes.pipe(file)
       putRes.on('end', () => {
         file.end()
+        setTimeout(resolve, 100)
       })
-      putRes.on('finish', () => {
-        resolve()
-      })
+      // putRes.on('finish', () => {
+      //   resolve()
+      // })
     })
 
     putReq.on('error', (err) => {
