@@ -35,7 +35,7 @@ const downloadFile = async (name, folder, format, outPath) => {
   await new Promise((resolve, reject) => {
     const req = new https.request(options, (res) => {
       if (!res || res.statusCode != 200) {
-        reject(`Fail to get file (1): ${res.statusCode}:${res.statusMessage} : ${name}`)
+        reject(`downloadFile: Fail to get file (1): ${res.statusCode}:${res.statusMessage} : ${name}`)
       }
       res.pipe(file)
       res.on('end', () => {
@@ -64,13 +64,13 @@ const newFileFromTemplate = async (templateName, folder, newName, data) => {
   try {
     const res = await wordsApi.executeMailMerge(request)
     if (!res || res.response.statusCode != 200) {
-      throw new Error(`Fail to post file (2): ${res.response.statusCode}:${res.response.statusMessage} : ${templateName}`)
+      throw new Error(`newFileFromTemplate: Fail to post file (2): ${res.response.statusCode}:${res.response.statusMessage} : ${templateName}`)
     }
 
   } catch (e) {
     const errorMsg = e.body ? e.body.error.message : e
     console.error(errorMsg)
-    throw new Error(`Fail to post file (3): ${errorMsg} : ${templateName}`)
+    throw new Error(`newFileFromTemplate: Fail to post file (3): ${errorMsg} : ${templateName}`)
   }
 }
 
@@ -99,7 +99,7 @@ const convertFileOnAspose = (token, hostname, sessionId, hexDOCName, hexPDFName,
 
     const putReq = https.request(putOptions, (putRes) => {
       if (putRes.statusCode != 200) {
-        reject(`Fail to conver file (1): ${putRes.statusCode}: ${putRes.statusMessage} : ${hexDOCName}`)
+        reject(`convertFileOnAspose: Fail to conver file (1): ${putRes.statusCode}: ${putRes.statusMessage} : ${hexDOCName}`)
       }
 
       putRes.pipe(file)
@@ -115,7 +115,7 @@ const convertFileOnAspose = (token, hostname, sessionId, hexDOCName, hexPDFName,
 
     const getReq = https.request(getOptions, (getRes) => {
       if (getRes.statusCode != 200) {
-        reject(`Fail to convert file (2): ${getRes.statusCode}:${getRes.statusMessage} : ${hexDOCName}`)
+        reject(`convertFileOnAspose: Fail to convert file (2): ${getRes.statusCode}:${getRes.statusMessage} : ${hexDOCName}`)
       }
 
       getRes.on('data', (chunk) => {
@@ -155,7 +155,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
 
     const putReq = https.request(putOptions, (putRes) => {
       if (putRes.statusCode != 200) {
-        reject(`Fail to post file (3): ${putRes.statusCode}: ${putRes.statusMessage} : ${hexDOCName}`)
+        reject(`moveFileToAspose: Fail to post file (3): ${putRes.statusCode}: ${putRes.statusMessage} : ${hexDOCName}`)
       }
     })
 
@@ -165,7 +165,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
 
     const getReq = https.request(getOptions, (getRes) => {
       if (getRes.statusCode != 200) {
-        reject(`Fail to get file (2): ${getRes.statusCode}:${getRes.statusMessage} : ${hexDOCName}`)
+        reject(`moveFileToAspose: Fail to get file (2): ${getRes.statusCode}:${getRes.statusMessage} : ${hexDOCName}`)
       }
 
       getRes.on('data', (chunk) => {
