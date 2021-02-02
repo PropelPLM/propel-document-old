@@ -2,7 +2,6 @@ const fs = require('fs')
 const https = require('https')
 const crypto = require('crypto')
 const StorageApi = require('asposestoragecloud')
-const { WordsApi, ExecuteMailMergeRequest } = require('asposewordscloud')
 
 const asposeHostname = 'api.aspose.cloud'
 const asposeID = '3d1ec870-02bf-422f-b29b-1bc6aec2ca32'
@@ -11,28 +10,23 @@ const config = { 'appSid': asposeID, 'apiKey': asposeKey }
 
 //these aspose objects need to be singletons, so I cache them on global so they aren't initialized more than once
 const uId = asposeID + asposeKey
-global.wordsApiMap = global.wordsApiMap || {}
-const wordsApi = global.wordsApiMap[uId] || new WordsApi(asposeID, asposeKey)
-global.wordsApiMap[uId] = wordsApi
-
 global.storageApiMap = global.storageApiMap || {}
 const storageApi = global.storageApiMap[uId] || new StorageApi(config)
 global.storageApiMap[uId] = storageApi
+global.staticToken = null
 
-const downloadFile = async (name, folder, format, outPath) => {
-  const token = await getToken()
-  const type = (name.endsWith('.docx') || name.endsWith('.doc')) ? 'v4.0/words' : 'v3.0/cells'
-  const options = {
-    hostname: asposeHostname,
-    path: `/${type}/${encodeURIComponent(name)}?folder=${folder}&format=${format}`,
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    },
-  }
-  const file = fs.createWriteStream(outPath)
-
-  await new Promise((resolve, reject) => {
+const downloadFile = (name, folder, format, outPath) => {
+  return new Promise((resolve, reject) => {
+    const type = (name.endsWith('.docx') || name.endsWith('.doc')) ? 'v4.0/words' : 'v3.0/cells'
+    const options = {
+      hostname: asposeHostname,
+      path: `/${type}/${encodeURIComponent(name)}?folder=${folder}&format=${format}`,
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${global.staticToken}`,
+      },
+    }
+    const file = fs.createWriteStream(outPath)
     const req = new https.request(options, (res) => {
       if (!res || res.statusCode != 200) {
         reject(`downloadFile: Fail to get file (1): ${res.statusCode}:${res.statusMessage} : ${name}`)
@@ -40,7 +34,7 @@ const downloadFile = async (name, folder, format, outPath) => {
       res.pipe(file)
       res.on('end', () => {
         file.end()
-        setTimeout(resolve, 220)
+        setTimeout(resolve, 500)
       })
     })
     req.on('error', (e) => {
@@ -50,31 +44,44 @@ const downloadFile = async (name, folder, format, outPath) => {
   })
 }
 
-const newFileFromTemplate = async (templateName, folder, newName, data) => {
-
-  const request = new ExecuteMailMergeRequest({
-    folder: folder,
-    name: templateName,
-    data: data,
-    withRegions: true,
-    cleanup: 'EmptyParagraphs,UnusedRegions,UnusedFields,RemoveTitleRow,RemoveTitleRowInInnerTables',
-    destFileName: `${folder}/${newName}`
-  })
-
-  try {
-    const res = await wordsApi.executeMailMerge(request)
-    if (!res || res.response.statusCode != 200) {
-      throw new Error(`newFileFromTemplate: Fail to post file (2): ${res.response.statusCode}:${res.response.statusMessage} : ${templateName}`)
+const newFileFromTemplate = (templateName, folder, newName, data) => {
+  return new Promise((resolve, reject) => {
+    const querySet = {
+      folder: folder,
+      withRegions: true,
+      destFileName: encodeURIComponent(`${folder}/${newName}`),
+      cleanup: encodeURIComponent('EmptyParagraphs,UnusedRegions,UnusedFields,RemoveTitleRow,RemoveTitleRowInInnerTables'),
     }
-
-  } catch (e) {
-    const errorMsg = e.body ? e.body.error.message : e
-    console.error(errorMsg)
-    throw new Error(`newFileFromTemplate: Fail to post file (3): ${errorMsg} : ${templateName}`)
-  }
+    const queryStr = Object.keys(querySet).map((k) => `${k}=${querySet[k]}`).join('&')
+    const options = {
+      hostname: asposeHostname,
+      path: `/v4.0/words/${encodeURIComponent(templateName)}/MailMerge?${queryStr}`,
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${global.staticToken}`,
+      },
+    }
+    const req = new https.request(options, (res) => {
+      if (res.statusCode != 200) {
+        throw new Error('Unable to get Aspose token: ' + res.statusMessage)
+      }
+      let rData = ''
+      res.on('data', (c) => {
+        rData += c
+      })
+      res.on('end', () => {
+        setTimeout(() => { resolve(rData) }, 500);
+      })
+    })
+    req.on('error', (e) => {
+      return reject(e)
+    })
+    req.write(data)
+    req.end()
+  })
 }
 
-const convertFileOnAspose = (token, hostname, sessionId, hexDOCName, hexPDFName, templateVersionId) => {
+const convertFileOnAspose = (hostname, sessionId, hexDOCName, hexPDFName, templateVersionId) => {
   return new Promise((resolve, reject) => {
     const getOptions = {
       hostname,
@@ -91,7 +98,7 @@ const convertFileOnAspose = (token, hostname, sessionId, hexDOCName, hexPDFName,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/octet-stream',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${global.staticToken}`,
       },
     }
 
@@ -105,7 +112,7 @@ const convertFileOnAspose = (token, hostname, sessionId, hexDOCName, hexPDFName,
       putRes.pipe(file)
       putRes.on('end', () => {
         file.end()
-        setTimeout(resolve, 220)
+        setTimeout(resolve, 500)
       })
     })
 
@@ -220,12 +227,13 @@ const getToken = () => {
       if (res.statusCode != 200) {
         throw new Error('Unable to get Aspose token: ' + res.statusMessage)
       }
-      let data = ''
+      let rData = ''
       res.on('data', (c) => {
-        data += c
+        rData += c
       })
       res.on('end', () => {
-        resolve(JSON.parse(data).access_token)
+        global.staticToken = JSON.parse(rData).access_token
+        resolve(global.staticToken)
       })
     })
     req.on('error', (e) => {

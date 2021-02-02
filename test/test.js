@@ -10,7 +10,7 @@ const fakeRes = {
 }
 
 const data = {
-  sessionId: '00D6A000002kEjK!ARIAQJvztEMG2ac5e1S_9WgI7w4FzPSeQ98YJFqYTqLx0iF6YXn2KGTYFzyxysJW9wtXcq6Tv9PTDlVtLBzmqXtBr6N7D47I',
+  sessionId: '00D6A000002kEjK!ARIAQJPScmD0Te0iETITDNrf96Gk5AkHPZ34UBAwQBjas7tCcON.8wVLjz4BvraI4nzpBb1XHC2AWrYmVxeqsPBzAwgaq..Y',
   "orgId": "00D6A000002kEjKUAU",
   "hostUrl": "na122.salesforce.com",
   "namespace": "P5DAN",
@@ -150,9 +150,278 @@ const data = {
 
 // new Watermark(data, fakeRes)
 
+
 const data2 = {
+  templateNameOnAspose: 'Quality Template NCR.docx',
+  sessionId: '00D6A000002kEjK!ARIAQFslaeHN6XuWOB3H.c3IRRsraOVf7aE2pN09DpT2E8joFDD4wLW1voaLrVWB6sa0F1Dn5GUT7H1.Y3L7W0rXhSN_5I16',
+  recordId: 'a0b3s00000T8c1hAAB',
+  orgId: '00D6A000002kEjKUAU',
+  newFileName: 'Quality_NCR-2019-002.pdf',
+  hostUrl: 'na122.salesforce.com',
+  dataToPopulate: `{
+    "RelatedLists" : [ {
+      "Relationship__c" : [ ]
+    } ],
+    "ContentDocument" : [ ],
+    "ApprovalData" : [ {
+      "ResponseType" : "Unanimous",
+      "PhaseName" : "MRB Approval",
+      "OriginalActorName" : "Dianna Stuckey",
+      "GroupName" : null,
+      "ApprovalDate" : null,
+      "ActorName" : "Dianna Stuckey"
+    }, {
+      "ResponseType" : "Unanimous",
+      "PhaseName" : "MRB Approval",
+      "OriginalActorName" : "Richard Liu",
+      "GroupName" : null,
+      "ApprovalDate" : null,
+      "ActorName" : "Richard Liu"
+    }, {
+      "ResponseType" : "Unanimous",
+      "PhaseName" : "MRB Approval",
+      "OriginalActorName" : "Jim Rosa",
+      "GroupName" : null,
+      "ApprovalDate" : null,
+      "ActorName" : "Jim Rosa"
+    } ],
+    "AffectedItems" : [ {
+      "Item_Revision__r" : {
+        "attributes" : {
+          "type" : "Item_Revision__c",
+          "url" : "/services/data/v51.0/sobjects/Item_Revision__c/a0r6A000001bvjlQAA"
+        },
+        "Master_Item__c" : "a0t6A000001Fwb7QAC",
+        "Id" : "a0r6A000001bvjlQAA",
+        "Description__c" : "RAR for Complaint Reference C2019-001",
+        "Revision__c" : "A",
+        "Lifecycle_Phase__c" : "Production",
+        "Released_Date_Time__c" : "2019-07-25T21:16:50",
+        "CreatedById" : "0056A000002QkmaQAC",
+        "Created_Date__c" : "2019-07-15T23:45:30",
+        "Training_Required__c" : false,
+        "Released__c" : true,
+        "Name" : "ISV-R-RAR0013:A",
+        "Expired__c" : false,
+        "Cancelled__c" : false,
+        "Is_Latest_Released__c" : true,
+        "Has_Bom__c" : false,
+        "Has_Aml__c" : false,
+        "Has_Attachments__c" : true,
+        "Related_Change__c" : "a0c3u00000BrK6MAAV",
+        "CreatedBy" : {
+          "attributes" : {
+            "type" : "User",
+            "url" : "/services/data/v51.0/sobjects/User/0056A000002QkmaQAC"
+          },
+          "Name" : "Joh Hoskin",
+          "Id" : "0056A000002QkmaQAC"
+        },
+        "Master_Item__r" : {
+          "attributes" : {
+            "type" : "Item__c",
+            "url" : "/services/data/v51.0/sobjects/Item__c/a0t6A000001Fwb7QAC"
+          },
+          "Revision_Count__c" : 1,
+          "Id" : "a0t6A000001Fwb7QAC"
+        },
+        "Related_Change__r" : {
+          "attributes" : {
+            "type" : "Change__c",
+            "url" : "/services/data/v51.0/sobjects/Change__c/a0c3u00000BrK6MAAV"
+          },
+          "Status_lk__c" : "a0b3u00000L0hfpAAB",
+          "Lifecycle__c" : "a0u6A00000BB8SfQAL",
+          "Name" : "2019-0114",
+          "Id" : "a0c3u00000BrK6MAAV",
+          "Status_lk__r" : {
+            "attributes" : {
+              "type" : "Change_Phase__c",
+              "url" : "/services/data/v51.0/sobjects/Change_Phase__c/a0b3u00000L0hfpAAB"
+            },
+            "Name" : "Approved",
+            "Id" : "a0b3u00000L0hfpAAB"
+          }
+        }
+      },
+      "Item__r" : {
+        "Latest_Revision__r" : {
+          "Id" : "a0r6A000001bvjlQAA",
+          "Name" : "ISV-R-RAR0013:A",
+          "attributes" : {
+            "url" : "/services/data/v51.0/sobjects/Item_Revision__c/a0r6A000001bvjlQAA",
+            "type" : "Item_Revision__c"
+          }
+        },
+        "Latest_Released_Revision__r" : {
+          "Id" : "a0r6A000001bvjlQAA",
+          "Name" : "ISV-R-RAR0013:A",
+          "attributes" : {
+            "url" : "/services/data/v51.0/sobjects/Item_Revision__c/a0r6A000001bvjlQAA",
+            "type" : "Item_Revision__c"
+          }
+        },
+        "LastModifiedBy" : {
+          "Id" : "0056A000000k3GqQAI",
+          "Name" : "Richard Liu",
+          "attributes" : {
+            "url" : "/services/data/v51.0/sobjects/User/0056A000000k3GqQAI",
+            "type" : "User"
+          }
+        },
+        "CreatedBy" : {
+          "Id" : "0056A000002QkmaQAC",
+          "Name" : "Joh Hoskin",
+          "attributes" : {
+            "url" : "/services/data/v51.0/sobjects/User/0056A000002QkmaQAC",
+            "type" : "User"
+          }
+        },
+        "Owner" : {
+          "Id" : "0056A000002QkmaQAC",
+          "Name" : "Joh Hoskin",
+          "attributes" : {
+            "url" : "/services/data/v51.0/sobjects/User/0056A000002QkmaQAC",
+            "type" : "Name"
+          }
+        },
+        "Category__r" : {
+          "Id" : "a0Z6A000004DrvRUAS",
+          "Item_Related_Tab__c" : "Items__r",
+          "Right_Panel__c" : "CHANGE,QUALITY,HISTORY,FOLLOWERS,CHATTER",
+          "Left_Panel__c" : "DETAILS,ATTACHMENTS",
+          "Lifecycle__c" : "a0u6A00000BB8SaQAL",
+          "Name" : "Quality System Data/Record",
+          "attributes" : {
+            "url" : "/services/data/v51.0/sobjects/Category__c/a0Z6A000004DrvRUAS",
+            "type" : "Category__c"
+          }
+        },
+        "Revisions_Draft__c" : 0,
+        "Revision_Count__c" : 1,
+        "Pending_Revisions__c" : 0,
+        "Revision__c" : "A",
+        "Owner_Name__c" : "Joh Hoskin",
+        "On_Change_cb__c" : false,
+        "On_Change__c" : false,
+        "Name_Unique__c" : "ISV-R-RAR0013",
+        "Image__c" : "n/a",
+        "Has_Quality__c" : true,
+        "Has_Parent__c" : false,
+        "Has_Open_Quality__c" : false,
+        "SystemModstamp" : "2020-08-24T17:23:06",
+        "LastModifiedById" : "0056A000000k3GqQAI",
+        "LastModifiedDate" : "2020-05-29T16:51:14",
+        "CreatedById" : "0056A000002QkmaQAC",
+        "CreatedDate" : "2019-07-15T23:45:30",
+        "IsDeleted" : false,
+        "OwnerId" : "0056A000002QkmaQAC",
+        "Latest_Lifecycle_Phase__c" : "Production",
+        "Latest_Revision__c" : "a0r6A000001bvjlQAA",
+        "Latest_Released_Revision__c" : "a0r6A000001bvjlQAA",
+        "Description__c" : "RAR for Complaint Reference C2019-001",
+        "Has_Attachments__c" : true,
+        "Has_Aml__c" : false,
+        "Has_Pending_Revision__c" : false,
+        "Has_Bom__c" : false,
+        "Document_Type__c" : "Engineering Records",
+        "Category__c" : "a0Z6A000004DrvRUAS",
+        "Name" : "ISV-R-RAR0013",
+        "Id" : "a0t6A000001Fwb7QAC",
+        "attributes" : {
+          "url" : "/services/data/v51.0/sobjects/Item__c/a0t6A000001Fwb7QAC",
+          "type" : "Item__c"
+        }
+      },
+      "Quality_Issue_lk__c" : "a183u000006o9B9AAI",
+      "Item_Revision__c" : "a0r6A000001bvjlQAA",
+      "Item_Category__c" : "Quality System Data/Record",
+      "Id" : "a023u00000YxLSWAA3"
+    } ],
+    "Quality__c" : [ {
+      "DateTime" : "2021-01-29 22:11:50",
+      "Date" : "2021-01-29",
+      "UserFullName" : "Propel Support",
+      "Username" : "sfqms@ischemaview.com.isvpropel",
+      "status_lk__r" : "Closed",
+      "category__r" : "NCMR",
+      "lastmodifiedby" : "Propel Support",
+      "createdby" : "Bess Taylor",
+      "owner" : "Bess Taylor",
+      "category_i__c" : "NCMR",
+      "requires_notificationi__c" : "false",
+      "disposition_executor__c" : "Jim Rosa",
+      "disposition_details__c" : "See ISV-R-RAR0013",
+      "if_other_explain__c" : "NA",
+      "containment_explanation__c" : "N/A",
+      "investigation_completed_by__c" : "Richard Liu",
+      "regulatory_review_decision_made_by__c" : "Jim Rosa",
+      "if_yes_capa_number__c" : "N/A",
+      "is_a_corrective_action_required__c" : "No",
+      "requires_notification__c" : "false",
+      "defect_cla__c" : "Minor-no effect on risk or functionality of the system",
+      "investigation_performed_results__c" : "During analysis of this issue, a specific component deleteCronLambda in the AWS Back end was found to be suffering from timeout errors, which means that a task took too long to complete and was canceled. This had a flow-on effect of allowing the set of visible cases to grow for some sites, to the extent that the response payload for some API operations became too large and started failing. See ISV-R-RAR0013",
+      "if_no_rationale__c" : "N/A",
+      "required_investigation__c" : "Yes",
+      "cause_of_nc__c" : "Internal",
+      "disposition_execution_details__c" : "N/A",
+      "non_conformance_description__c" : "On 13th July 2019 a specific user of the RMV mobile app was unable to view any case data.  Discovered internally by Richard Liu. (Initially entered as a complaint on C2019-001.)",
+      "ncr_cause_if_other__c" : "N/A",
+      "if_product_udi__c" : "NA",
+      "if_yes_indicate_other_prod_ver__c" : "NA",
+      "product_process_type__c" : "RAPID",
+      "if_supplier_other_describe__c" : "N/A",
+      "preventative_action__c" : "false",
+      "corrective_action__c" : "false",
+      "additional_complainant_information_reque__c" : "N/A",
+      "supplier_providing_assistance__c" : "N/A",
+      "treatment_did_the_event_occur__c" : "Not Applicable",
+      "if_product_name_of_module__c" : "Rapid Mobile Viewer (RMV)",
+      "have_dispositions_been_executed__c" : "Yes",
+      "disposition__c" : "Discontinue Use/Distribution/Process",
+      "is_a_recall_required__c" : "No",
+      "notification_explanation__c" : "No notification required.",
+      "risk_of_nonconformance__c" : "Minor",
+      "ncr_cause_code__c" : "CSP - Computer Software Problem",
+      "is_scar_required__c" : "false",
+      "containment_required__c" : "No",
+      "if_product_affect_other_prod_ver__c" : "No",
+      "if_product_software_version__c" : "2.3.5",
+      "type_of_nc__c" : "Product",
+      "contained__c" : "false",
+      "contact_details__c" : "<br><br>",
+      "if_product_quantity_affected__c" : "1",
+      "owner_of_investigation__c" : "Richard Liu",
+      "area_process_discovered__c" : "RAPID Mobile Viewer by Richard Liu when reviewing customer install.",
+      "account_details__c" : "<br><br><br>",
+      "quality_url__c" : "https://ischemaview--isvpropel--pdlm.visualforce.com/a183u000006o9B9",
+      "title__c" : "RMV2.3.5 - specific user of RMV mobile app was unable to view case data",
+      "status_lk__c" : "a0b3u00000NW3aQAAT",
+      "in_approval_process__c" : "false",
+      "has_attachments__c" : "true",
+      "has_affected_items__c" : "true",
+      "closed__c" : "true",
+      "closed_date_time__c" : "2020-05-29 16:51:14",
+      "category__c" : "a0Z6A000004DqlaUAC",
+      "approved__c" : "false",
+      "affected_item_counter__c" : "1",
+      "systemmodstamp" : "2021-01-27 01:07:25",
+      "lastmodifiedbyid" : "0056A000002abIOQAY",
+      "lastmodifieddate" : "2021-01-27 01:07:25",
+      "createdbyid" : "0056A000002ad4sQAA",
+      "createddate" : "2019-10-23 19:21:55",
+      "name" : "NCR-2019-002",
+      "isdeleted" : "false",
+      "ownerid" : "0056A000002ad4sQAA",
+      "id" : "a183u000006o9B9AAI"
+    } ]
+  }`
+}
+
+
+const data3 = {
   templateNameOnAspose: 'Quality Template - Product Complaint.docx',
-  sessionId: '00D0U0000009hv5!ARoAQHU2WJ0h0nIj2o5gUnoRiBtg_XEQdxyYH0jOv4GSQT2yqAlAtZYSMWe3I3Yv.wrBIZrcVbhJPbfdgbzk2fIQrZrIEchx',
+  sessionId: '00D6A000002kEjK!ARIAQCpAUJ8DfDoO8J0LKAer8AlYZTfvfxewlXGAVUpevI2CmnBBTm2ha1t0MZCkt9TWvTI0zWoyo2NTOxJGeTUupTmZJH24',
   recordId: 'a1c0U000001SqF4QAK',
   orgId: '00D0U0000009hv5UAA',
   newFileName: 'Quality_CMP-000006538.pdf',

@@ -31,6 +31,7 @@ class Watermark {
 
   async start() {
     try {
+      await Aspose.getToken()
       await this.makeApprovalPage()
       for (let doc of this.documents) {
         await this.convertDoc(doc)
@@ -61,8 +62,7 @@ class Watermark {
       const isDoc = (ext == '.docx' || ext == '.doc')
 
       if (isDoc) {
-        const token = await Aspose.getToken();
-        await Aspose.convertFileOnAspose(token, this.hostname, this.sessionId, hexDOCName, hexPDFName, templateVersionId)
+        await Aspose.convertFileOnAspose(this.hostname, this.sessionId, hexDOCName, hexPDFName, templateVersionId)
       } else {
         // move doc from sf to aspose
         await Aspose.moveFileToAspose(this.hostname, this.sessionId, hexDOCName, templateVersionId)

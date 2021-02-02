@@ -33,6 +33,8 @@ class Template {
 
   async start() {
     try {
+      await Aspose.getToken()
+
       // make new doc from template
       await Aspose.newFileFromTemplate(this.templateNameOnAspose, this.orgId, this.tempFileName, this.dataToPopulate)
 
