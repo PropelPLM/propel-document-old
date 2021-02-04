@@ -63,7 +63,8 @@ const newFileFromTemplate = (templateName, folder, newName, data) => {
     }
     const req = new https.request(options, (res) => {
       if (res.statusCode != 200) {
-        throw new Error('Unable to get Aspose token: ' + res.statusMessage)
+        reject(`newFileFromTemplate: Fail to get file (1): ${res.statusCode}:${res.statusMessage} : ${templateName}`)
+        console.error(res.statusCode, res.statusMessage, res.error)
       }
       let rData = ''
       res.on('data', (c) => {
