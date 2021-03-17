@@ -1,5 +1,8 @@
 const { Client } = require('pg')
-const dbClientConfig = { connectionString: (process.env.DATABASE_URL || 'watermark_local_test') }
+const dbClientConfig = {
+  connectionString: (process.env.DATABASE_URL || 'watermark_local_test'),
+  ssl: { rejectUnauthorized: false },
+}
 
 const insertRecord = async (orgId, callType, fileName, pageCount) => {
   const client = new Client(dbClientConfig)
