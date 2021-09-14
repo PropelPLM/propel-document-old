@@ -17,7 +17,7 @@ class Watermark {
     this.documents = documents
     this.approvalData = approvalData
     this.orgId = orgId
-    this.namespace = namespace
+    this.namespace = namespace ? namespace + '/' : ''
     this.sessionId = sessionId
 
     this.versionIds = {}
@@ -145,7 +145,7 @@ class Watermark {
     return new Promise((resolve, reject) => {
       const options = {
         hostname: this.hostname,
-        path: `/services/apexrest/${this.namespace}/api/v2/attachment`,
+        path: `/services/apexrest/${this.namespace}api/v2/attachment`,
         method: 'POST',
         headers: {
           'Authorization': 'OAuth ' + this.sessionId
