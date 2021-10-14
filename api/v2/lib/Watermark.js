@@ -8,6 +8,7 @@ const Aspose = require('./Aspose')
 const FileService = require('./FileService')
 
 const approvalTemplateName = 'Approval_Template.doc'
+const customLog = true
 
 class Watermark {
   constructor(body, res) {
@@ -22,6 +23,13 @@ class Watermark {
 
     this.versionIds = {}
     this.changeTemplateMap = {}
+
+    this.log('>>> body', {
+      hostname: this.hostname,
+      orgId: this.orgId,
+      namespace: this.namespace,
+      sessionId: this.sessionId,
+    });
 
     res.status(200)
     res.send('Processing')
@@ -60,6 +68,8 @@ class Watermark {
       const hexPDFName = hex + '.pdf'
 
       const isDoc = (ext == '.docx' || ext == '.doc')
+
+      this.log('>>> convert : ', templateName, hex);
 
       if (isDoc) {
         await Aspose.convertFileOnAspose(this.hostname, this.sessionId, hexDOCName, hexPDFName, templateVersionId)
@@ -153,7 +163,7 @@ class Watermark {
       }
       const req = new https.request(options, (res) => {
         if (res.statusCode != 200) {
-          reject(`Fail to post file links: ${res.statusCode}:${res.statusMessage}`)
+          reject(`WMv2: Fail to post file links: ${res.statusCode}:${res.statusMessage}`)
         }
         res.on('end', () => {
           resolve()
@@ -169,6 +179,11 @@ class Watermark {
       }))
       req.end()
     })
+  }
+
+  log(raws) {
+    if (!customLog) { return }
+    console.log(raws);
   }
 }
 
