@@ -24,7 +24,7 @@ class Watermark {
     this.versionIds = {}
     this.changeTemplateMap = {}
 
-    this.log('>>> body', {
+    this.log('>>> body' + {
       hostname: this.hostname,
       orgId: this.orgId,
       namespace: this.namespace,
@@ -69,7 +69,7 @@ class Watermark {
 
       const isDoc = (ext == '.docx' || ext == '.doc')
 
-      this.log('>>> convert : ', templateName, hex);
+      this.log('>>> convert : ' + templateName + hex);
 
       if (isDoc) {
         await Aspose.convertFileOnAspose(this.hostname, this.sessionId, hexDOCName, hexPDFName, templateVersionId)
