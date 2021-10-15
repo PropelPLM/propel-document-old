@@ -56,7 +56,7 @@ Content-Type: application/octet-stream; charset=ISO-8859-1
 
     const req = new https.request(options, (res) => {
       if (res.statusCode != 201) {
-        reject(`Fail to post file: ${res.statusCode}:${res.statusMessage}`)
+        reject(`WMv2: SF: Fail to post file: insertNewDocument ${res.statusCode}:${res.statusMessage}`)
       }
       let data = ''
       res.on('data', (d) => {
@@ -125,7 +125,7 @@ Content-Disposition: form-data; name="VersionData"; fileName="${fileName}"
     }
     const req = new https.request(options, (res) => {
       if (res.statusCode != 201) {
-        reject(`Fail to post file: ${res.statusCode}:${res.statusMessage}`)
+        reject(`WMv2: SF: Fail to post file: insertContentVersion ${res.statusCode}:${res.statusMessage}`)
       }
       let data = ''
       res.on('data', (d) => {
