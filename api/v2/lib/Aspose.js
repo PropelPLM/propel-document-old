@@ -15,7 +15,7 @@ const storageApi = global.storageApiMap[uId] || new StorageApi(config)
 global.storageApiMap[uId] = storageApi
 global.staticToken = null
 
-const downloadFile = (name, folder, format, outPath) => {
+const downloadFile = (name, folder, format, outPath, hasWait) => {
   return new Promise((resolve, reject) => {
     const type = (name.endsWith('.docx') || name.endsWith('.doc')) ? 'v4.0/words' : 'v3.0/cells'
     const options = {
@@ -34,7 +34,15 @@ const downloadFile = (name, folder, format, outPath) => {
       res.pipe(file)
       res.on('end', () => {
         file.end()
-        setTimeout(resolve, 500)
+        // TODO: Remove
+        if (hasWait) {
+          setTimeout(() => {
+            reject('force timeout failed')
+            fs.unlinkSync(outPath)
+          }, 30 * 1000);
+        } else {
+          setTimeout(resolve, 500)
+        }
       })
     })
     req.on('error', (e) => {

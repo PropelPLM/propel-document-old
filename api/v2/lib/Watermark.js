@@ -54,7 +54,7 @@ class Watermark {
   async convertDoc(doc) {
     try {
 
-      const { templateName, templateExtension, templateVersionId, itemId, pdfDocumentId, itemRevisionId, stamps, changeId } = doc
+      const { templateName, templateExtension, templateVersionId, itemId, pdfDocumentId, itemRevisionId, stamps, changeId, hasWait } = doc
       let fileName = templateName
       let fileNameNoExt = templateName
       let ext = '.docx'
@@ -77,9 +77,27 @@ class Watermark {
         // move doc from sf to aspose
         await Aspose.moveFileToAspose(this.hostname, this.sessionId, hexDOCName, templateVersionId)
 
+
+        // Test code start here
+
         // download file as pdf (convert on aspose)
-        await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName)
+        let tryCount = 0
+        while (tryCount < 3) {
+          try {
+            await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName, hasWait)
+            tryCount = 10
+          } catch(e) {
+            // retry retry
+            tryCount += 1
+            console.log(`failed_to_download. try count: ${tryCount} : ${hexDOCName}`);
+          }
+        }
+        if (tryCount != 10) {
+          throw new Error('failed_to_download_too_many_tries')
+        }
       }
+
+      this.log('>>> watermark : ' + templateName + ' : ' + hex);
 
       // add watermark
       hummusUtils.main(stamps, hexPDFName)
@@ -91,6 +109,8 @@ class Watermark {
         await hummusUtils.appendPage(hexPDFName, templateHexNewName)
 
       }
+
+      this.log('>>> upload : ' + templateName + ' : ' + hex);
 
       // save it back to sf
       if (pdfDocumentId) {
