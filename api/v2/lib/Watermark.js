@@ -9,6 +9,7 @@ const FileService = require('./FileService')
 
 const approvalTemplateName = 'Approval_Template.doc'
 const customLog = true
+const retryMax = 10
 
 class Watermark {
   constructor(body, res) {
@@ -20,7 +21,7 @@ class Watermark {
     this.orgId = orgId
     this.namespace = namespace ? namespace + '/' : ''
     this.sessionId = sessionId
-    this.retryMax = 10
+
 
     this.versionIds = {}
     this.changeTemplateMap = {}
@@ -82,7 +83,7 @@ class Watermark {
         await this.timeout(1000)
         let tryCount = 0
         let isDone = false
-        while (tryCount < this.retryMax && !isDone) {
+        while (tryCount < retryMax && !isDone) {
           try {
             await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName)
             isDone = true
