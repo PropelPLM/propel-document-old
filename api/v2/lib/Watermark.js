@@ -81,17 +81,18 @@ class Watermark {
         // download file as pdf (convert on aspose)
         await this.timeout(1000)
         let tryCount = 0
-        while (tryCount < this.retryMax) {
+        let isDone = false
+        while (tryCount < this.retryMax && !isDone) {
           try {
             await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName)
-            tryCount = 99
+            isDone = true
           } catch(e) {
             tryCount += 1
             await this.timeout(tryCount * 1000)
             console.log(`Failed_to_download : try count : ${tryCount} : ${hex}`);
           }
         }
-        if (tryCount != 99) {
+        if (!isDone) {
           throw new Error('Failed_to_download_too_many_tries : ' + templateName + ' : ' + hex)
         }
       }
