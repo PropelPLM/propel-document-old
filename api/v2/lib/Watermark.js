@@ -20,6 +20,7 @@ class Watermark {
     this.orgId = orgId
     this.namespace = namespace ? namespace + '/' : ''
     this.sessionId = sessionId
+    this.retryMax = 10
 
     this.versionIds = {}
     this.changeTemplateMap = {}
@@ -69,7 +70,7 @@ class Watermark {
 
       const isDoc = (ext == '.docx' || ext == '.doc')
 
-      this.log('>>> convert : ' + templateName + ' : ' + hex);
+      this.log('>>> convert : ' + isDoc + ' : ' + templateName + ' : ' + hex);
 
       if (isDoc) {
         await Aspose.convertFileOnAspose(this.hostname, this.sessionId, hexDOCName, hexPDFName, templateVersionId)
@@ -78,8 +79,24 @@ class Watermark {
         await Aspose.moveFileToAspose(this.hostname, this.sessionId, hexDOCName, templateVersionId)
 
         // download file as pdf (convert on aspose)
-        await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName)
+        await this.timeout(1000)
+        let tryCount = 0
+        while (tryCount < this.retryMax) {
+          try {
+            await Aspose.downloadFile(hexDOCName, '', 'pdf', hexPDFName)
+            tryCount = 99
+          } catch(e) {
+            tryCount += 1
+            await this.timeout(tryCount * 1000)
+            console.log(`Failed_to_download : try count : ${tryCount} : ${hex}`);
+          }
+        }
+        if (tryCount != 99) {
+          throw new Error('Failed_to_download_too_many_tries : ' + templateName + ' : ' + hex)
+        }
       }
+
+      this.log('>>> watermark : ' + templateName + ' : ' + hex);
 
       // add watermark
       hummusUtils.main(stamps, hexPDFName)
@@ -91,6 +108,8 @@ class Watermark {
         await hummusUtils.appendPage(hexPDFName, templateHexNewName)
 
       }
+
+      this.log('>>> upload : ' + templateName + ' : ' + hex);
 
       // save it back to sf
       if (pdfDocumentId) {
@@ -109,7 +128,7 @@ class Watermark {
         await Aspose.deleteFile('', hexDOCName, null)
       }
     } catch (e) {
-      console.error(e)
+      console.error(e, doc)
     }
   }
 
@@ -179,6 +198,10 @@ class Watermark {
       }))
       req.end()
     })
+  }
+
+  timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   log(raws) {
