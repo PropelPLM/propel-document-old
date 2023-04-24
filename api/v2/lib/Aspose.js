@@ -22,6 +22,7 @@ const downloadFile = (name, folder, format, outPath) => {
       hostname: asposeHostname,
       path: `/${type}/${encodeURIComponent(name)}?folder=${folder}&format=${format}`,
       method: 'GET',
+      timeout: 180 * 1000,
       headers: {
         'Authorization': `Bearer ${global.staticToken}`,
       },
@@ -36,6 +37,10 @@ const downloadFile = (name, folder, format, outPath) => {
         file.end()
         setTimeout(resolve, 500)
       })
+      res.on('timeout', () => {
+        res.destroy();
+        reject(`downloadFile: Fail to get file (1-1): timeout : ${name}`)
+    });
     })
     req.on('error', (e) => {
       return reject(e)

@@ -91,6 +91,7 @@ class Watermark {
             tryCount += 1
             await this.timeout(tryCount * 1000)
             console.log(`Failed_to_download : try count : ${tryCount} : ${hex}`);
+            console.log(e);
           }
         }
         if (!isDone) {
@@ -183,10 +184,18 @@ class Watermark {
         }
       }
       const req = new https.request(options, (res) => {
+        let data = ''
         if (res.statusCode != 200) {
+          for (let v in this.versionIds) {
+            console.log(`${v}: ${this.versionIds[v]}`);
+          }
           reject(`WMv2: Fail to post file links: ${res.statusCode}:${res.statusMessage}`)
         }
+        res.on('data', (d) => {
+          data += d
+        })
         res.on('end', () => {
+          console.log(data);
           resolve()
         })
       })
