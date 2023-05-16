@@ -13,6 +13,47 @@ const retryMax = 10
 
 class Watermark {
   constructor(body, res) {
+    let route_to_v2 = process.env.ROUTE_TO_V2;
+    if (route_to_v2 == true) {
+      this.log('Routing to V2 service');
+      this.routeToJavaV2Service(body);
+    } else {
+      this.log('Routing to Aspose Service');
+      this.routeToAsposeService(body, res);
+    }
+  }
+  
+  async routeToJavaV2Service(body) {
+    let java_url = process.env.V2_JAVA_URL;
+    this.log('>>> Route ' + java_url)
+      const options = {
+        hostname: java_url,
+        path: "/v1/watermark",
+        method: "POST",
+        headers: {
+        'Content-Type': 'application/json',
+      }
+      };
+      const req = new https.request(options, (res) => {
+        if (res.statusCode != 200) {
+          throw new Error("Unable to connect to Java service: " + res.statusMessage);
+        }
+        let data = "";
+        res.on("data", (c) => {
+          data += c;
+        });
+        res.on("end", () => {
+          console.log("Java request sent successfully " + data);
+        });
+      });
+      req.on("error", (e) => {
+        console.log('Error: ' + e);
+      });
+      req.write(JSON.stringify(body));
+      req.end();
+  }
+  
+  async routeToAsposeService(body, res) {
     const { documents, approvalData, hostUrl, sessionId, orgId, namespace } = body
     let hostUrlArray = hostUrl.split('//')
     this.hostname = hostUrlArray[hostUrlArray.length - 1]
