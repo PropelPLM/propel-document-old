@@ -13,6 +13,7 @@ const retryMax = 10
 
 class Watermark {
   constructor(body, res) {
+    console.log('Route to V2: ' + process.env.ROUTE_TO_V2)
     let route_to_v2 = process.env.ROUTE_TO_V2;
     if (route_to_v2 == true) {
       this.log('Routing to V2 service');
