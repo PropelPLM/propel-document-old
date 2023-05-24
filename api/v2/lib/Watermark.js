@@ -17,6 +17,8 @@ class Watermark {
     if (route_to_v2 == true) {
       this.log('Routing to V2 service');
       this.routeToJavaV2Service(body);
+      res.status(200);
+      res.send('Processing');
     } else {
       this.log('Routing to Aspose Service');
       this.routeToAsposeService(body, res);
@@ -28,25 +30,25 @@ class Watermark {
     this.log('>>> Route ' + java_url)
       const options = {
         hostname: java_url,
-        path: "/v1/watermark",
-        method: "POST",
+        path: '/v1/watermark',
+        method: 'POST',
         headers: {
         'Content-Type': 'application/json',
       }
       };
       const req = new https.request(options, (res) => {
         if (res.statusCode != 200) {
-          throw new Error("Unable to connect to Java service: " + res.statusMessage);
+          throw new Error('Unable to connect to Java service: ' + res.statusMessage);
         }
-        let data = "";
-        res.on("data", (c) => {
+        let data ='';
+        res.on('data', (c) => {
           data += c;
         });
-        res.on("end", () => {
-          console.log("Java request sent successfully " + data);
+        res.on('end', () => {
+          console.log('Java request sent successfully ' + data);
         });
       });
-      req.on("error", (e) => {
+      req.on('error', (e) => {
         console.log('Error: ' + e);
       });
       req.write(JSON.stringify(body));
