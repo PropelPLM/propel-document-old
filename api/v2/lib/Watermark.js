@@ -15,7 +15,7 @@ class Watermark {
   constructor(body, res) {
     console.log('Route to V2: ' + process.env.ROUTE_TO_V2)
     let route_to_v2 = process.env.ROUTE_TO_V2;
-    if (route_to_v2 == true) {
+    if (route_to_v2 == 'true') {
       this.log('Routing to V2 service');
       this.routeToJavaV2Service(body);
       res.status(200);
