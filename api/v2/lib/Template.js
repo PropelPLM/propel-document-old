@@ -31,6 +31,7 @@ class Template {
     setTimeout(() => {
       this.res.status(200)
       this.res.send('Processing')
+      this.res = null
     }, 28000)
     this.start()
   }
@@ -52,8 +53,11 @@ class Template {
       console.log('--------------------------INSERT DOCUMENT--------------------------')
       await this.insertNewDocument()
 
-      this.res.writeHead(200, { 'Content-Type': 'application/json' })
-      this.res.end()
+      if(this.res) {
+        this.res.status(200)
+        this.res.send('Template service Done')
+      }
+      
       // log
       console.log('--------------------------INSERT LOG--------------------------')
       await Database.insertRecord(this.orgId, 'template', this.newFileName, hummusUtils.getPageCount(this.tempFilePDFName))
@@ -65,7 +69,9 @@ class Template {
 
     } catch (e) {
       console.error(e)
-      this.res.status(400).json({ error: e.toString() })
+      if(this.res){
+        this.res.status(400).json({ error: e.toString() })
+      }
     }
   }
 
