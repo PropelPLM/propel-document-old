@@ -28,31 +28,41 @@ class Template {
     this.tempFileName = hex + '.docx';
     this.tempFilePDFName = hex + '.pdf';
 
+    setTimeout(() => {
+      this.res.status(200)
+      this.res.send('Processing')
+    }, 28000)
     this.start()
   }
 
   async start() {
     try {
+      console.log('--------------------------GET TOKEN--------------------------')
       await Aspose.getToken()
 
+      console.log('--------------------------NEW FILE--------------------------')
       // make new doc from template
       await Aspose.newFileFromTemplate(this.templateNameOnAspose, this.orgId, this.tempFileName, this.dataToPopulate)
 
       // download it as pdf
+      console.log('--------------------------DOWNLOAD FILE--------------------------')
       await Aspose.downloadFile(this.tempFileName, this.orgId, 'pdf', this.tempFilePDFName)
 
       // upload to sf
+      console.log('--------------------------INSERT DOCUMENT--------------------------')
       await this.insertNewDocument()
-
-      // log
-      await Database.insertRecord(this.orgId, 'template', this.newFileName, hummusUtils.getPageCount(this.tempFilePDFName))
-
-      //cleanup
-      await Aspose.deleteFile(this.orgId, this.tempFileName)
-      fs.unlinkSync(this.tempFilePDFName)
 
       this.res.writeHead(200, { 'Content-Type': 'application/json' })
       this.res.end()
+      // log
+      console.log('--------------------------INSERT LOG--------------------------')
+      await Database.insertRecord(this.orgId, 'template', this.newFileName, hummusUtils.getPageCount(this.tempFilePDFName))
+
+      //cleanup
+      console.log('--------------------------DELETE FILE--------------------------')
+      await Aspose.deleteFile(this.orgId, this.tempFileName)
+      fs.unlinkSync(this.tempFilePDFName)
+
     } catch (e) {
       console.error(e)
       this.res.status(400).json({ error: e.toString() })
