@@ -29,7 +29,7 @@ class Template {
     this.tempFilePDFName = hex + '.pdf';
 
     this.timeoutId = setTimeout(() => {
-      console.log('-----HIT TIME OUT RESPONDING WITH 200----)
+      console.log('-----HIT TIME OUT RESPONDING WITH 200----')
       this.res.status(200)
       this.res.send('Processing')
       this.res = null
