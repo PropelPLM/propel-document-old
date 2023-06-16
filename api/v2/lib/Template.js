@@ -29,6 +29,7 @@ class Template {
     this.tempFilePDFName = hex + '.pdf';
 
     this.timeoutId = setTimeout(() => {
+      console.log('-----HIT TIME OUT RESPONDING WITH 200----)
       this.res.status(200)
       this.res.send('Processing')
       this.res = null
@@ -54,6 +55,7 @@ class Template {
       await this.insertNewDocument()
 
       if(this.res) {
+        console.log('-------PROCESSING COMPLETE NORMALLY')
         this.res.status(200)
         this.res.send('Template service Done')
         clearTimeout(this.timeoutId);
@@ -71,7 +73,7 @@ class Template {
     } catch (e) {
       console.error(e)
       if(this.res){
-        this.res.status(400).json({ error: e.toString() })
+        this.res.status(400).send(e.toString())
         clearTimeout(this.timeoutId);
       }
     }
