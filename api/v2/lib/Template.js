@@ -28,7 +28,7 @@ class Template {
     this.tempFileName = hex + '.docx';
     this.tempFilePDFName = hex + '.pdf';
 
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       this.res.status(200)
       this.res.send('Processing')
       this.res = null
@@ -56,6 +56,7 @@ class Template {
       if(this.res) {
         this.res.status(200)
         this.res.send('Template service Done')
+        clearTimeout(this.timeoutId);
       }
       
       // log
@@ -71,6 +72,7 @@ class Template {
       console.error(e)
       if(this.res){
         this.res.status(400).json({ error: e.toString() })
+        clearTimeout(this.timeoutId);
       }
     }
   }
