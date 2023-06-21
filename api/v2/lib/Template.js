@@ -39,6 +39,12 @@ class Template {
 
   async start() {
     try {
+      console.log('--------------RECORD ID--------------------')
+      console.log(this.recordId)
+      console.log('--------------OUTPUT NAME-------------------')
+      console.log(this.newFileName)
+      console.log('--------------ASPOSE TEMPLATE NAME-------------------')
+      console.log(this.templateNameOnAspose)
       console.log('--------------------------GET TOKEN--------------------------')
       await Aspose.getToken()
 
