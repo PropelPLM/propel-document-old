@@ -74,7 +74,7 @@ const moveFileToAspose = (hostname, sessionId, hexDOCName, templateVersionId) =>
   return new Promise((resolve, reject) => {
     let getOptions = {
       hostname,
-      path: `/services/data/v23.0/sobjects/ContentVersion/${templateVersionId}/VersionData`,
+      path: `/services/data/v64.0/sobjects/ContentVersion/${templateVersionId}/VersionData`,
       method: 'GET',
       headers: { 'Authorization': `Bearer ${sessionId}` }
     }
