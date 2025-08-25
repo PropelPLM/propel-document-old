@@ -116,7 +116,7 @@ Content-Disposition: form-data; name="VersionData"; fileName="${fileName}"
 
     const options = {
       hostname: serverUrl,
-      path: '/services/data/v34.0/sobjects/ContentVersion/',
+      path: '/services/data/v64.0/sobjects/ContentVersion/',
       method: 'POST',
       headers: {
         'Content-Type': `multipart/form-data; boundary="${boundary}"`,
